@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Event Booking page - Welcome and choose an Event</title>
+    <style type="text/css">
+        body {
+            width: 1200px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Event Booking App</h1>
+</header>
+<main>
+    <form action="/home" method="POST">
+        <h3>Search for your event: </h3>
+        <input type="text" name="name" th:value="${search}">
+        <input type="number" name="rating" min="1" max="10" th:value="${searchRating}"><br/>
+        <input type="submit" value="Search">
+    </form>
+    <button><a href="/events/add">Add New Event</a></button></th:block>
+    <h2>Choose an event:</h2>
+    <form action="/eventbooking" method="POST">
+        <ul>
+            <li th:each="event: ${events}">
+                <input type="radio" th:value="${event.getName()}" name="selectedEvent" />
+                Name: <th:block th:text="${event.getName()}"></th:block>,
+                Description: <th:block th:text="${event.getDescription()}"></th:block>
+                Rating: <th:block th:text="${event.getPopularityScore()}"></th:block>
+                Location: <th:block th:text="${event.getLocation().getName()}"></th:block>
+                <button><a th:href="@{'/events/edit/' + ${event.getId()}}">Edit Event</a></button></th:block>
+            </li>
+        </ul>
+        <h2>Choose number of tickets:</h2>
+        <input type="text" name="attendeeName" placeholder="Attendee Name"/>
+        <input type="text" name="attendeeAddress" placeholder="Attendee Address"/>
+        <input type="number" name="numTickets" min="1" max="10"><br/>
+        <br/>
+        <input type="submit" value="Submit">
+    </form>
+
+    <form method="POST" th:action="@{/events/delete}" id="deleteEventForm">
+        <label>Select Event to Delete:</label>
+        <select name="eventId" required>
+            <option th:each="event : ${events}"
+                    th:value="${event.id}"
+                    th:text="${event.name}"></option>
+        </select><br>
+
+        <button type="submit">Delete Event</button>
+    </form>
+</main>
+</body>
+</html>

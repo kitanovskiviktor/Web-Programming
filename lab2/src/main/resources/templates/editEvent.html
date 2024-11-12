@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Event</title>
+</head>
+<body>
+<h1>Edit Event</h1>
+
+<form action="#" th:action="@{/events/edit/{eventId}(eventId=${event.id})}" method="post">
+    <input type="hidden" name="eventId" th:value="${event.id}">
+
+    <label>Event name:</label>
+    <input type="text" name="name" th:value="${event.name}" required><br>
+
+    <label>Event description:</label>
+    <input type="text" name="description" th:value="${event.description}" required><br>
+
+    <label>Rating:</label>
+    <input type="number" step="0.1" name="popularityScore" th:value="${event.popularityScore}" required><br>
+
+    <label>Location:</label>
+    <select name="locationId" required>
+        <option th:each="location : ${locations}"
+                th:value="${location.id}"
+                th:text="${location.name}"
+                th:selected="${location.id == event.location.id}"></option>
+    </select><br>
+
+    <button type="submit">Edit Event</button>
+</form>
+</body>
+</html>
