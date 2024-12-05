@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th colspan="2">
+            Event Details
+        </th>
+        <th colspan="2">
+            <form th:action="@{'/events/delete/{id}' (id=${event.getId()})}"
+                  th:method="DELETE">
+                <button type="submit">
+                    Delete
+                </button>
+            </form>
+        </th>
+        <th colspan="2">
+            <form th:action="@{'/events/change-rating/{id}' (id=${event.getId()})}"
+                  th:method="POST">
+                <input type="hidden" name="increment" value="increment">
+                <button type="submit"
+                        th:attr="disabled=${event.isRatingManipulated() ? 'disabled' : null}">
+                    Increase Rating
+                </button>
+            </form>
+        </th>
+        <th colspan="2">
+            <form th:action="@{'/events/change-rating/{id}' (id=${event.getId()})}"
+                  th:method="POST">
+                <input type="hidden" name="decrease" value="decrease">
+                <button type="submit"
+                        th:attr="disabled=${event.isRatingManipulated() ? 'disabled' : null}">
+                    Decrease Rating
+                </button>
+            </form>
+        </th>
+    </tr>
+    <tr>
+        <td><b>Event Name </b></td>
+        <td th:text="${event.getName()} ?: 'Event name'"></td>
+    </tr>
+    <tr>
+        <td><b>Event Description</b></td>
+        <td th:text="${event.getDescription()} ?: 'Event description'"></td>
+    </tr>
+    <tr>
+        <td><b>Event Popularity</b></td>
+        <td th:text="${event.getPopularityScore()} ?: 'Event popularity'"></td>
+    </tr>
+    <tr>
+        <td><b>Event Location</b></td>
+        <td th:text="${event.getLocation().getName()} ?: 'Event location'">Event location</td>
+    </tr>
+</table>
+<a type="button" href="/events">Back</a>
+</body>
+</html>
