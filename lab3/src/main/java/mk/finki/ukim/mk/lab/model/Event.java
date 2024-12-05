@@ -23,7 +23,7 @@ public class Event {
         this.name = name;
         this.description = description;
         this.popularityScore = popularityScore;
-        this.id = (long) (Math.random() * 1000);
+       // this.id = (long) (Math.random() * 1000);
         this.location = location;
         this.isRatingManipulated = false;
     }

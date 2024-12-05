@@ -24,7 +24,6 @@ public class EventController {
 
     @GetMapping
     public String getEventsPage(@RequestParam(required = false) String error, Model model, HttpServletRequest req) {
-        // Fetch data
         List<Location> locations = locationService.findAll();
         if (locations == null) {
             locations = List.of();
@@ -33,11 +32,8 @@ public class EventController {
         if (eventList == null) {
             eventList = List.of();
         }
-
         String searchName = req.getParameter("searchName");
         String minRating = req.getParameter("minRating");
-
-        // Filter logic
         if (searchName != null && minRating != null && !minRating.isEmpty()) {
             eventList = eventService.searchEvents(searchName).stream()
                     .filter(event -> event.getPopularityScore() >= Double.parseDouble(minRating))
@@ -52,7 +48,6 @@ public class EventController {
             eventList = eventService.listAll();
         }
 
-        // Check if there are no events or locations
         if (eventList.isEmpty()) {
             model.addAttribute("events", null);
         } else {
@@ -64,7 +59,6 @@ public class EventController {
         } else {
             model.addAttribute("locations", locations);
         }
-
         return "listEvents";
     }
 
