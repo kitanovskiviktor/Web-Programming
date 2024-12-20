@@ -2,7 +2,6 @@ package mk.finki.ukim.mk.lab.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +20,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/events/add-form", "/events/edit-form/**", "/events/edit-form").hasRole("ADMIN")
+                        .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form
@@ -28,9 +28,11 @@ public class SecurityConfig {
                 )
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/events")
                 )
-                .csrf((csrf) -> csrf.disable());
+                .csrf((csrf) -> csrf.disable())
+                .headers((headers) -> headers
+                        .frameOptions((frameOptions) -> frameOptions.sameOrigin()));
 
         return http.build();
     }
@@ -51,4 +53,3 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(admin);
     }
 }
-

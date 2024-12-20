@@ -8,6 +8,9 @@
 <h1>Events</h1>
 <main>
     <a href="/login">Login</a>
+    <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
     <h2>Search an event:</h2>
     <form th:method="GET" th:action="@{/events}">
         <label for="search">By Event Name:</label>
